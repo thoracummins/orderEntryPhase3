@@ -7,8 +7,9 @@ import java.util.Scanner;
 
 public class OrderEntryPhase3 {
 
-	//vars
+	//Variables
 	private double discountPercent;
+	private double grossPrice;
 	private String itemDescription;
 	private String itemNumber;
 	private double itemPrice;
@@ -29,7 +30,7 @@ public class OrderEntryPhase3 {
 		getDiscountPercent();
 		
 		//Calculations
-		Double grossPrice = itemPrice*itemQtyOrdered;  // calc cost of item
+		grossPrice = itemPrice*itemQtyOrdered;  // calc cost of item
 		
 		totalTax = grossPrice * taxPercent;  // Calc Total Tax
 		totalDiscount = grossPrice * discountPercent;
@@ -44,6 +45,8 @@ public class OrderEntryPhase3 {
 		System.out.println("Enter Discount Percent: ");
 		
 		discountPercent = dpOBJ.nextDouble();
+		
+
 	}
 	
 	//Item Description
@@ -53,6 +56,8 @@ public class OrderEntryPhase3 {
 		System.out.println("Enter Item Description: ");
 		
 		itemDescription = itemOBJ.nextLine();
+		
+
 	}
 	
 	//Item Number
@@ -61,7 +66,9 @@ public class OrderEntryPhase3 {
 		Scanner itemOBJ = new Scanner(System.in);
 		System.out.println("Enter Item Number: ");
 		
-		itemNumber = itemOBJ.nextLine();		
+		itemNumber = itemOBJ.nextLine();	
+		
+
 	}
 	
 	//Item Price
@@ -71,6 +78,7 @@ public class OrderEntryPhase3 {
 		System.out.println("Enter Item Price: ");
 		
 		itemPrice = ipOBJ.nextDouble();
+		
 	}
 	
 	//Quantity Ordered
@@ -80,6 +88,7 @@ public class OrderEntryPhase3 {
 		System.out.println("Enter Quantity Ordered: ");
 		
 		itemQtyOrdered = oqOBJ.nextInt();
+		
 	}
 	
 	//Tax Percent
@@ -89,15 +98,16 @@ public class OrderEntryPhase3 {
 		System.out.println("Enter Tax Percent: ");
 		
 		taxPercent = txOBJ.nextDouble();
+		
 	}
 	
 	
 	//Print Invoice
-	public void printInvoice()
+public void printInvoice()
 	{
 		System.out.println("\n Order Entry\n");
-		System.out.println("Item Number\tItem Description\tItem Price\tQuantity\tTax %\tTax\tDiscount%\tDiscount\tNet Price");
-		System.out.println("  "+itemNumber+"\t   "+itemDescription+"\t\t   "+itemPrice+"\t\t    "+itemQtyOrdered+"\t\t "+taxPercent+
+		System.out.println("Item Number\tItem Description\tItem Price\tQuantity\tGross Price\tTax %\tTax\tDiscount%\tDiscount\tNet Price");
+		System.out.println("  "+itemNumber+"\t   "+itemDescription+"\t\t   "+itemPrice+"\t\t    "+itemQtyOrdered+"\t\t   "+grossPrice+"\t\t"+taxPercent+
 								"\t"+String.format("%.2f",totalTax)+"\t   "+discountPercent+"\t\t  "+
 							    String.format("%.2f", totalDiscount)+"\t\t  "+String.format("%.2f",netPrice));
 	}
