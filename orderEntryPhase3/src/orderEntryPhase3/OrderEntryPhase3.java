@@ -17,7 +17,16 @@ public class OrderEntryPhase3 {
 	private double netPrice;
 	private double taxPercent;
 	private double totalDiscount;
+	private int totalItems = 0;
 	private double totalTax;
+	
+	// Continue running program?
+	public String continueYesNo()
+	{
+		Scanner contOBJ = new Scanner(System.in);
+		System.out.println("Continue? (y/n): ");
+		return contOBJ.nextLine();		
+	}
 	
 	//Gather Inputs
 	public void gatherInputs()
@@ -31,11 +40,13 @@ public class OrderEntryPhase3 {
 		
 		//Calculations
 		grossPrice = itemPrice*itemQtyOrdered;  // calc cost of item
-		
+	
 		totalTax = grossPrice * taxPercent;  // Calc Total Tax
 		totalDiscount = grossPrice * discountPercent;
-		netPrice = (grossPrice + totalTax) - totalDiscount;
+		netPrice = (grossPrice + totalTax) - totalDiscount;	
 		
+		//Calc Totals
+		totalItems =+ 1;
 	}
 	
 	//Discount Percent
@@ -44,9 +55,7 @@ public class OrderEntryPhase3 {
 		Scanner dpOBJ = new Scanner(System.in);
 		System.out.println("Enter Discount Percent: ");
 		
-		discountPercent = dpOBJ.nextDouble();
-		
-
+		discountPercent = dpOBJ.nextDouble();		
 	}
 	
 	//Item Description
@@ -56,8 +65,6 @@ public class OrderEntryPhase3 {
 		System.out.println("Enter Item Description: ");
 		
 		itemDescription = itemOBJ.nextLine();
-		
-
 	}
 	
 	//Item Number
@@ -67,8 +74,6 @@ public class OrderEntryPhase3 {
 		System.out.println("Enter Item Number: ");
 		
 		itemNumber = itemOBJ.nextLine();	
-		
-
 	}
 	
 	//Item Price
@@ -78,7 +83,6 @@ public class OrderEntryPhase3 {
 		System.out.println("Enter Item Price: ");
 		
 		itemPrice = ipOBJ.nextDouble();
-		
 	}
 	
 	//Quantity Ordered
@@ -88,7 +92,6 @@ public class OrderEntryPhase3 {
 		System.out.println("Enter Quantity Ordered: ");
 		
 		itemQtyOrdered = oqOBJ.nextInt();
-		
 	}
 	
 	//Tax Percent
@@ -97,13 +100,23 @@ public class OrderEntryPhase3 {
 		Scanner txOBJ = new Scanner(System.in);
 		System.out.println("Enter Tax Percent: ");
 		
-		taxPercent = txOBJ.nextDouble();
+		taxPercent = txOBJ.nextDouble();	
+	}
 		
+	//Print Grand Totals
+	public void printGrandTotals()
+	{
+		System.out.println("\n Grand Totals\n");
+		System.out.println("Total Items");
+		System.out.println("   "+totalItems);
+		//System.out.println("Item Number\tItem Description\tItem Price\tQuantity\tGross Price\tTax %\tTax\tDiscount%\tDiscount\tNet Price");
+		//System.out.println("  "+itemNumber+"\t   "+itemDescription+"\t\t   "+itemPrice+"\t\t    "+itemQtyOrdered+"\t\t   "+grossPrice+"\t\t"+taxPercent+
+								//"\t"+String.format("%.2f",totalTax)+"\t   "+discountPercent+"\t\t  "+
+							   // String.format("%.2f", totalDiscount)+"\t\t  "+String.format("%.2f",netPrice));
 	}
 	
-	
 	//Print Invoice
-public void printInvoice()
+	public void printInvoice()
 	{
 		System.out.println("\n Order Entry\n");
 		System.out.println("Item Number\tItem Description\tItem Price\tQuantity\tGross Price\tTax %\tTax\tDiscount%\tDiscount\tNet Price");
@@ -113,13 +126,29 @@ public void printInvoice()
 	}
 	
 	//-----------------------------------------------------------------------
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
+		String cont = "y";
+		
+		do
+		{
+			OrderEntryPhase3 oep = new OrderEntryPhase3();
+		
+			// gather input data
+			oep.gatherInputs();
+			
+			// print invoice
+			oep.printInvoice();
+			
+			//Continue?
+			cont = oep.continueYesNo();
+			System.out.println("Continue: "+cont);
+			
+		} while (cont.toUpperCase() != "N" && cont.toUpperCase() != "n");
+		
 		OrderEntryPhase3 oep = new OrderEntryPhase3();
 		
-		// gather input data
-		oep.gatherInputs();
-				// print invoice
-		oep.printInvoice();
+		oep.printGrandTotals();
 		
 		System.out.println("\nBye!!!");
 
