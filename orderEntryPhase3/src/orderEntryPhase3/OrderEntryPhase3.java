@@ -16,10 +16,8 @@ public class OrderEntryPhase3
 	private double itemPrice;
 	private int itemQtyOrdered;
 	private double netPrice;
-	public String printLine = 	"";
 	private double taxPercent;
 	private double totalDiscount;
-	private int totalItems = 0;
 	private double totalTax;
 	
 	// Continue yes or no
@@ -32,7 +30,7 @@ public class OrderEntryPhase3
 	}
 	
 	//Gather Inputs
-	public void gatherInputs()
+	public String gatherInputs()
 	{
 		getItemDescription();
 		getItemNumber();
@@ -49,10 +47,9 @@ public class OrderEntryPhase3
 		netPrice = (grossPrice + totalTax) - totalDiscount;	
 		
 		//Calculate Totals
-		totalItems =+ 1;   // count line items
 		
 		//build list
-		printLine = printLine + "  "+itemNumber+"\t   "+itemDescription+"\t\t   "+itemPrice+"\t\t    "+itemQtyOrdered+"\t\t   "+grossPrice+"\t\t"+taxPercent+
+		return "  "+itemNumber+"\t   "+itemDescription+"\t\t   "+itemPrice+"\t\t    "+itemQtyOrdered+"\t\t   "+grossPrice+"\t\t"+taxPercent+
 				"\t"+String.format("%.2f",totalTax)+"\t   "+discountPercent+"\t\t  "+
 			    String.format("%.2f", totalDiscount)+"\t\t  "+String.format("%.2f",netPrice)+"\n";
 	}
@@ -116,7 +113,7 @@ public class OrderEntryPhase3
 	{
 		System.out.println("\n Grand Totals\n");
 		System.out.println("Total Items");
-		System.out.println("     "+totalItems);
+		//System.out.println("     "+totalItems);
 		//System.out.println("Item Number\tItem Description\tItem Price\tQuantity\tGross Price\tTax %\tTax\tDiscount%\tDiscount\tNet Price");
 		//System.out.println("  "+itemNumber+"\t   "+itemDescription+"\t\t   "+itemPrice+"\t\t    "+itemQtyOrdered+"\t\t   "+grossPrice+"\t\t"+taxPercent+
 								//"\t"+String.format("%.2f",totalTax)+"\t   "+discountPercent+"\t\t  "+
@@ -128,31 +125,37 @@ public class OrderEntryPhase3
 	{
 		System.out.println("\n Order Entry\n");
 		System.out.println("Item Number\tItem Description\tItem Price\tQuantity\tGross Price\tTax %\tTax\tDiscount%\tDiscount\tNet Price");
-		System.out.println(printLine);		
 	}
 	
 	//-----------------------------------------------------------------------
 	public static void main(String[] args)
 	{
 		char cont = 'Y';
+		String printLine = "";
+		int totalItems = 0;	
 		
 		do
 		{
 			OrderEntryPhase3 oep = new OrderEntryPhase3();
 		
 			// gather input data
-			oep.gatherInputs();
+			totalItems = totalItems + 1;   // line count
+			printLine= printLine + oep.gatherInputs();
 			
-			cont = oep.contineYesNo().charAt(0);					
+			// Continue? yes or no
+			cont = oep.contineYesNo().charAt(0);
+			
 		} while (cont == 'Y' || cont == 'y');
 
+		// Wrap it up
 		OrderEntryPhase3 oep = new OrderEntryPhase3();
 		
 		// print invoice
 		oep.printInvoice();
+		System.out.println(printLine);
 		
 		// print Grand Totals
-		oep.printGrandTotals();
+		//oep.printGrandTotals();
 		
 		System.out.println("\nBye!!!");
 
