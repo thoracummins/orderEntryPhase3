@@ -10,15 +10,15 @@ public class OrderEntryPhase3
 
 	//Variables
 	private double discountPercent;
-	private double grossPrice;
+	public double grossPrice;
 	private String itemDescription;
 	private String itemNumber;
 	private double itemPrice;
 	private int itemQtyOrdered;
-	private double netPrice;
+	public double netPrice;
 	private double taxPercent;
-	private double totalDiscount;
-	private double totalTax;
+	public double totalDiscount;
+	public double totalTax;
 	
 	// Continue yes or no
 	public String contineYesNo()
@@ -45,8 +45,6 @@ public class OrderEntryPhase3
 		totalTax = grossPrice * taxPercent;  // Calculate Total Tax
 		totalDiscount = grossPrice * discountPercent;
 		netPrice = (grossPrice + totalTax) - totalDiscount;	
-		
-		//Calculate Totals
 		
 		//build list
 		return "  "+itemNumber+"\t   "+itemDescription+"\t\t   "+itemPrice+"\t\t    "+itemQtyOrdered+"\t\t   "+grossPrice+"\t\t"+taxPercent+
@@ -109,15 +107,11 @@ public class OrderEntryPhase3
 	}
 		
 	//Print Grand Totals
-	public void printGrandTotals()
+	public void printGrandTotals(int totalItems, double totalGP, double totalTA, double totalDisc, double totalNP)
 	{
-		System.out.println("\n Grand Totals\n");
-		System.out.println("Total Items");
-		//System.out.println("     "+totalItems);
-		//System.out.println("Item Number\tItem Description\tItem Price\tQuantity\tGross Price\tTax %\tTax\tDiscount%\tDiscount\tNet Price");
-		//System.out.println("  "+itemNumber+"\t   "+itemDescription+"\t\t   "+itemPrice+"\t\t    "+itemQtyOrdered+"\t\t   "+grossPrice+"\t\t"+taxPercent+
-								//"\t"+String.format("%.2f",totalTax)+"\t   "+discountPercent+"\t\t  "+
-							   // String.format("%.2f", totalDiscount)+"\t\t  "+String.format("%.2f",netPrice));
+		System.out.println("\n\n Grand Totals\n");
+		System.out.println("Total Items\tTotal Gross Amount\tTotal Tax Amount\tTotal Discount Amount\tTotal Net Amount\n");
+		System.out.println("     "+totalItems+"\t\t       "+String.format("%.2f",totalGP)+"\t\t      "+String.format("%.2f",totalTA)+"\t\t\t"+String.format("%.2f",totalDisc)+"\t\t\t"+String.format("%.2f",totalNP));
 	}
 	
 	//Print Invoice
@@ -131,6 +125,10 @@ public class OrderEntryPhase3
 	public static void main(String[] args)
 	{
 		char cont = 'Y';
+		double totalDiscount = 0;
+		double totalGrossAmt = 0;
+		double totalNetPrice = 0;
+		double totalTaxAmount = 0;
 		String printLine = "";
 		int totalItems = 0;	
 		
@@ -142,6 +140,12 @@ public class OrderEntryPhase3
 			totalItems = totalItems + 1;   // line count
 			printLine= printLine + oep.gatherInputs();
 			
+			//Calculate totals
+			totalGrossAmt = totalGrossAmt + oep.grossPrice;
+			totalNetPrice = totalNetPrice + oep.netPrice;
+			totalTaxAmount = totalTaxAmount + oep.totalTax;
+			totalDiscount = totalDiscount + oep.totalDiscount;
+					
 			// Continue? yes or no
 			cont = oep.contineYesNo().charAt(0);
 			
@@ -155,7 +159,7 @@ public class OrderEntryPhase3
 		System.out.println(printLine);
 		
 		// print Grand Totals
-		//oep.printGrandTotals();
+		oep.printGrandTotals(totalItems, totalGrossAmt, totalTaxAmount, totalDiscount, totalNetPrice);
 		
 		System.out.println("\nBye!!!");
 
